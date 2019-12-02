@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>index</title>
+<style>
+@font-face { font-family: "UbuntuRegular"; src: url("fonts/ubuntu-r-mini.woff2") format("woff2"); font-weight: normal; font-style: normal; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --color-light: #e0dad5;
+  --color-dark: #424249;
+  --color-accent: #ff5e2c;
+  --color-accent2: #1a60af;
+  --foreground: var(--color-dark);
+  --background: var(--color-light);
+  --font-title: "UbuntuRegular";
+  --font-body: "UbuntuRegular";
+}
+.darkmode {
+  --color-light: #e0dad5;
+  --color-dark: #424249;
+  --color-accent: #ff5e2c;
+  --color-accent2: #1a60af;
+  --foreground: var(--color-light);
+  --background: var(--color-dark);
+}
+body { background: var(--background); color: var(--foreground); font-family: var(--font-body); font-size: 18px; line-height: 1.6; }
+a, a::after, a::before { color: var(--background); text-decoration: none; outline: none; }
+main button {   width: 120px; background: var(--color-accent2); height: 30px; border: 1px solid var(--color-dark); border-radius: 20px; outline: none; color: var(--color-light); }
+main button:hover { background: var(--foreground); color: var(--foreground); }
+.button_auth { text-align: right; padding-right: 15px; margin-top: 15px; }
+#auth:hover { color: var(--background); }
+#myBtn:hover { color: var(--background); }
+
+.btn { padding: 1em 2em; text-decoration: none; text-transform: uppercase; border-radius: 5px; position: relative; display: inline-block; line-height: 1; }
+.btn + .btn { margin-left: 1em; }
+/*.btn::after { content: ""; position: absolute; width: 100%; height: 100%; border: var(--foreground) 2px solid; left: -4px; top: 4px; border-radius: inherit; z-index: -1; }*/
+.dark-mode-toggle { position: absolute; z-index: 100; color: var(--background); border: 2px solid currentColor; padding: 4px; background: transparent; cursor: pointer; border-radius: 5px; width: 30px; height: 30px; bottom: 10px; right: 10px; }
+.click-here { width: 230px; right: -103px; position: absolute; bottom: 135px; transform: rotate(-90deg); }
+/*.click-here { width: 120px; right: -4px; position: absolute; top: 15px; height: 20px; }*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*
+FORM
+*/
+label { display: inline-block; width: 15em; vertical-align: top; }
+select { width: 40%; border: 1px solid #fff; box-shadow: 0 0 10px 0 #fff; }
+input.pole { width: 40%; border: 1px solid #fff; box-shadow: 0px 0px 10px 0px #fff; }
+textarea { width: 40%; height: 10em; resize: none; border: 1px solid #ffffff; box-shadow: 0 0 10px 0 #fff; }
+form div { margin-bottom: 1em; }
+/*
+END FORM
+*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*
+BURGER MENU
+*/
+.c-burger { display: block; position: absolute; right: 0; top: 0; overflow: hidden; margin: 0; padding: 0; width: 50px; height: 50px; font-size: 0; box-shadow: none; cursor: pointer; border: none; border-radius: 30px; }
+.c-burger:focus { outline: none; }
+.c-burger span {  display: block; position: absolute; top: 22.5px; left: 5px; right: 5px; height: 5px; background: var(--background); }
+.c-burger span::before, .c-burger span::after { position: absolute; display: block; left: 0; width: 100%; height: 5px; background: var(--background); content: ""; }
+.c-burger span::before { top: -10px; }
+.c-burger span::after { bottom: -10px; }
+.c-burger-line { background: var(--foreground); transition: all .5s ease; }
+.c-burger-line span { transition: background 0s; }
+.c-burger-line span::before, .c-burger-line span::after { transition-duration: 0.3s, 0.3s; transition-delay: 0.3s, 0s; }
+.c-burger-line span::before { transition-property: top, transform; }
+.c-burger-line span::after { transition-property: bottom, transform; }
+.c-burger-line.is-active { background: var(--foreground); }
+.c-burger-line.is-active span { background: none; }
+.c-burger-line.is-active span::before { top: 0; transform: rotate(-45deg); }
+.c-burger-line.is-active span::after { bottom: 0; transform: rotate(45deg); }
+.c-burger-line.is-active span::before, .c-burger-line.is-active span::after { transition-delay: 0s, 0.3s; background: var(--background); }
+#menu { width: 300px; margin-left: -250px; background: var(--foreground); color: var(--background); font-family: var(--font-body); font-size: 18px; line-height: 1.6; position: fixed; left: 0; top: 0; bottom: 0; transition: all ease .5s; z-index: 9999; padding-top: 50px; padding-left: 20px; }
+.container { text-align: center; margin-left: 50px; transition: all .5s ease; }
+#container.body-active { margin-left: 300px; transition: all .5s ease; }
+/*.body-active { margin-left: 300px; }*/
+#menu.nav-active { margin-left: 0; }
+#menu p a:hover { background: var(--color-accent2); color: var(--color-light); }
+/*
+END BURGER MENU
+*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*
+POPUP
+*/
+.popup { margin-left: 0; display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; transition: all .5s ease; /* background: rgba(0, 0, 0, 0.5); */ }
+.popup.body-active { margin-left: 300px; width: calc(100% - 300px); transition: all .5s ease; }
+.popup-content { position: relative; background: var(--background); color: var(--foreground); font-family: var(--font-body); font-size: 18px; line-height: 1.6; margin: 0 auto; animation-name: animatetop; animation-duration: 0.5s; height: 100%; }
+@keyframes animatetop {
+  from { top: -300px; opacity: 0; }
+  to { top: 0; opacity: 1; }
+}
+.close { font-size: 55px; padding-right: 15px; margin-top: -20px; display: block; }
+.close:hover, .close:focus { color: var(--foreground); text-decoration: none; cursor: pointer; }
+.popup-header { height: 5%; text-align: right; }
+.popup-body { transition: all .5s ease; height: 90%; text-align: left; padding-left: 75px; }
+.popup-body.body-active { padding-left: 10px; }
+.popup-footer { height: 5%; }
+/*.popup-header { background: #5c82b8; color: #ffffff; display: flex; padding: 2px 16px; }*/
+/*.popup-body { padding: 2px 16px; }*/
+/*.popup-footer { background: #5c82b8; color: #ffffff; padding: 2px 16px; }*/
+/*
+END POPUP
+*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+/*
+CHECKBOX
+*/
+.checkbox { --first-color: #ff4444; --second-color: #ffffff; --three-color: #00cc88; --width: 75px; --height: 50px; --offset: 1px; --duration: 0.5s; cursor: pointer; }
+.checkbox:hover { filter: brightness(1.2); }
+.checkbox__style { position: relative; width: var(--width); height: var(--height); border-radius: var(--width); background: var(--first-color); transition: var(--duration); }
+.checkbox__input { display: none; }
+.checkbox__input:checked ~ .checkbox__style { background: var(--three-color); }
+.checkbox__input:checked ~ .checkbox__style::before { background: var(--second-color); left: calc(var(--width) - var(--height) + var(--offset)); }
+.checkbox__style::before { content: ""; position: absolute; top: var(--offset); left: var(--offset); width: calc(var(--height) - 2 * var(--offset)); height: calc(var(--height) - 2 * var(--offset)); background: var(--second-color); border-radius: 50%; transition: var(--duration); }
+/*
+END CHECKBOX
+*/
+/*--------------------------------------------------------------------------------------------------------------------------------*/
+</style>
+</head>
+<body>
+  <div id="menu">
+    <button class="c-burger c-burger-line">
+      <span>Menu</span>
+    </button>
+    <p><a href="#">ГЛАВНАЯ</a></p>
+    <p><a href="#">HTML</a></p>
+    <p><a href="#">CSS</a></p>
+    <p><a href="#">JS</a></p>
+    <p><a href="#">PHP</a></p>
+    <p><a href="#">SQL</a></p>
+    <p><a href="#">Темы</a></p>
+    <p><a href="#">Примеры</a></p>
+    <p><a href="#">Настройки</a></p>
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <span id="click-here" class="click-here">Переключить на тёмную тему</span>
+    </button>
+  </div>
+  <div class="container" id="container">
+    <main>
+      <div class="button_auth">
+        <a href="/"><button id="auth">Войти</button></a>
+        <button id="myBtn">Регистрация</button>
+      </div>
+      <div class="popup" id="mypopup">
+        <div class="popup-content">
+          <div class="popup-header">
+            <span class="close" id="close">&times;</span>
+          </div>
+          <div class="popup-body" id="popup-body">
+              <h1>Регистрация</h1>
+              <form action="reg.php" method="post" enctype="multipart/form-data">
+                <div>
+                  <label for="login">Логин*:</label>
+                  <input type="text" name="login" id="login" class="pole">
+                </div>
+                <div>
+                  <label for="pass1">Пароль*:</label>
+                  <input type="password" name="pass1" id="pass1" class="pole">
+                </div>
+                <div>
+                  <label for="pass2">Повторите пароль*:</label>
+                  <input type="password" name="pass2" id="pass2" class="pole">
+                </div>
+                <div>
+                  <label for="sex1">Пол*:</label>
+                  Муж. <input type="radio" name="sex" id="sex1" value="1">
+                  Жен. <input type="radio" name="sex" id="sex2" value="2">
+                </div>
+                <div>
+                  <label for="education">Образование*:</label>
+                  <select name="education" id="education">
+                    <option value="" label="option1"></option>
+                    <option value="1" label="option2">Среднее</option>
+                    <option value="2" label="option3">Высшее</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="comment">Комментарий*:</label>
+                  <textarea name="comment" id="comment"></textarea>
+                </div>
+                <div>
+                  <label for="userfile">Ваше фото:</label>
+                  <input type="file" name="userfile" id="userfile">
+                </div>
+                <div>
+                  <label for="rule">С правилами согласен*:</label>
+                  <label class="checkbox">
+                    <input type="checkbox" name="rule" id="rule" value="yes" class="checkbox__input">
+                    <div class="checkbox__style"></div>
+                  </label>
+                </div>
+                <div>
+                  <input type="submit" value="Отправить">
+                </div>
+                Отмеченное * обязательно к заполнению.
+              </form>
+          </div>
+          <div class="popup-footer"></div>
+        </div>
+      </div>
+      <h1>HELLO</h1>
+    </main>
+  </div>
+<script>
+document.querySelector('.c-burger').addEventListener('click', function (e) {
+  e.preventDefault();
+  //this.classList.toggle('is-active');
+  if (this.classList.contains('is-active')) {
+      this.classList.remove('is-active');
+      document.querySelector('#menu').classList.remove('nav-active');
+      document.querySelector('#container').classList.remove('body-active');
+      document.querySelector('#mypopup').classList.remove('body-active');
+      document.querySelector('#popup-body').classList.remove('body-active');
+      document.body.classList.remove('body-active');
+  } else {
+    this.classList.add('is-active');
+    document.querySelector('#menu').classList.add('nav-active');
+    document.querySelector('#container').classList.add('body-active');
+    document.querySelector('#mypopup').classList.add('body-active');
+    document.querySelector('#popup-body').classList.add('body-active');
+    document.body.classList.add('body-active');
+  }
+});
+
+//------------------------------------------------------------------------------
+
+let popup = document.getElementById('mypopup'),
+  popupToggle = document.getElementById('myBtn'),
+  popupClose = document.getElementById('close');
+
+  popupToggle.onclick = function() {
+    popup.style.display = "block";
+  };
+  popupClose.onclick = function () {
+    popup.style.display = "none";
+    stop();
+  };
+
+  window.onclick = function (e) {
+    if(e.target == popup) {
+      popup.style.display = "none";
+      stop();
+    }
+  };
+
+//------------------------------------------------------------------------------
+
+let darkMode = localStorage.getItem('darkMode'); 
+  const darkModeToggle = document.querySelector('#dark-mode-toggle');
+  const enableDarkMode = () => {
+    document.body.classList.add('darkmode');
+    localStorage.setItem('darkMode', 'enabled');
+  }
+  const disableDarkMode = () => {
+    document.body.classList.remove('darkmode');
+    localStorage.setItem('darkMode', null);
+  }
+  if (darkMode === 'enabled') {
+    enableDarkMode();
+  }
+  darkModeToggle.addEventListener('click', () => {
+    darkMode = localStorage.getItem('darkMode'); 
+    if (darkMode !== 'enabled') {
+      enableDarkMode();
+      document.getElementById('click-here').innerHTML = "Переключить на светлую тему";
+    } else {
+      disableDarkMode();
+      document.getElementById('click-here').innerHTML = "Переключить на тёмную тему";
+    }
+  });
+</script>
+</body>
+</html>
